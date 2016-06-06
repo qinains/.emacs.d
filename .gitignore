@@ -1,0 +1,17 @@
+# Compiled
+*.elc
+
+# Packaging
+.cask
+
+.DS_Store
+auto-save-list/
+elpa/
+*~
+*.elc
+session.*
+*.swp
+cider-history
+ido.last
+places
+projectile*
