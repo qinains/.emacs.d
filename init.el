@@ -24,14 +24,14 @@
 (package-initialize)
 
 (defun melpa-package ()
-  "设置melpa安装包链接"
-  (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                           ("melpa" . "http://melpa.org/packages/"))))
+  "设置melpa安装包链接."
+  (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
+                           ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
 
 (defun melpa-stable-package ()
-  "设置melpa-stable安装包链接"
-  (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                           ("melpa-stable" . "http://stable.melpa.org/packages/"))))
+  "设置melpa-stable安装包链接."
+  (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
+                           ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/"))))
 
 (melpa-package)
 
@@ -59,12 +59,17 @@
 
 ;; 开发中的安装包
 (defvar melpa-develop-packages
-  '(4clojure
-    company-flx
+  '(company-flx
+    company-go
     docker
     docker-api
     dockerfile-mode
     flycheck-clojure
+    flycheck-gometalinter
+    flymake-go
+    go-eldoc
+    go-mode
+    go-projectile
     restclient
     sr-speedbar))
 
@@ -136,7 +141,7 @@
             (when (not (version< emacs-version "24.1"))
 
               ;; 设置字体
-              ;;(set-frame-font "-outline-WenQuanYi Micro Hei Mono-normal-normal-normal-sans-13-*-*-*-p-*-iso8859-1")
+              (set-frame-font "-outline-WenQuanYi Micro Hei Mono-normal-normal-normal-sans-13-*-*-*-p-*-iso8859-1")
               (tool-bar-mode -1)
               (scroll-bar-mode -1)
               (electric-indent-mode)
@@ -222,6 +227,24 @@
 
             ;;按C-M-\键格式化
             (global-set-key (kbd "C-M-\\") 'indent-whole)))
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (setq gofmt-command "goimports")
+            (add-hook 'before-save-hook 'gofmt-before-save)
+
+            (setq company-tooltip-limit 20)
+            (setq company-idle-delay .25)
+            (setq company-echo-delay 0)
+            (setq company-begin-commands '(self-insert-command))
+            (set (make-local-variable 'company-backends) '(company-go))
+            (company-mode)
+
+            (go-eldoc-setup)
+
+            (require 'flycheck-gometalinter)
+            (eval-after-load 'flycheck
+              '(add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup))))
 
 (add-hook
  'emacs-startup-hook
@@ -436,7 +459,8 @@
   (add-hook 'prog-mode-hook #'yas-minor-mode)
   (add-hook 'clojure-mode-hook #'yas-minor-mode)
   (add-hook 'cider-repl-mode-hook #'yas-minor-mode)
-  (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode))
+  (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode)
+  (add-hook 'go-mode-hook #'yas-minor-mode))
 
 (provide 'init)
 ;;; init.el ends here

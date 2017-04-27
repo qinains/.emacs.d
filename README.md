@@ -122,8 +122,8 @@ Windows系统下，
 在Linux系统下，
 编辑~/bin/lein文件，在“#!/usr/bin/env bash”下，添加
 
-	http_proxy=127.0.0.1:8580
-	https_proxy=127.0.0.1:8580
+	export http_proxy=127.0.0.1:8580
+	export https_proxy=127.0.0.1:8580
 
 **每次运行apps/bin/install.sh文件之后，都要重新编辑。**
 
