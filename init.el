@@ -242,7 +242,15 @@
 
             (go-eldoc-setup)
 
+            (go-guru-hl-identifier-mode)
+
             (require 'flycheck-gometalinter)
+            (setq flycheck-disabled-checkers '(go-gofmt
+                                               go-golint
+                                               go-vet
+                                               go-build
+                                               go-test
+                                               go-errcheck))
             (eval-after-load 'flycheck
               '(add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup))))
 
@@ -298,7 +306,6 @@
 
 ;; Clojure
 (after-load "clojure-mode-autoloads"
-  ;;(add-hook 'clojure-mode-hook 'flycheck-clojure-setup)
   (add-hook 'clojure-mode-hook 'subword-mode)
   (add-hook 'clojure-mode-hook 'turn-on-eldoc-mode))
 
@@ -306,10 +313,12 @@
   (setq cider-repl-use-clojure-font-lock t))
 
 (after-load "flycheck-autoloads"
-  (add-hook 'after-init-hook #'global-flycheck-mode))
-
-(after-load "flycheck-pos-tip-autoloads"
-  (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
+  (add-hook 'after-init-hook (lambda ()
+                               (global-flycheck-mode)
+                               (flycheck-pos-tip-mode)
+                               (add-hook 'clojure-mode-hook
+                                         (lambda ()
+                                           (flycheck-clojure-setup))))))
 
 (after-load "flx-ido-autoloads"
   (ido-mode)
@@ -456,11 +465,10 @@
 
 (after-load "yasnippet-autoloads"
   (add-hook 'web-mode-hook #'(lambda () (yas-activate-extra-mode 'html-mode)))
-  (add-hook 'prog-mode-hook #'yas-minor-mode)
-  (add-hook 'clojure-mode-hook #'yas-minor-mode)
-  (add-hook 'cider-repl-mode-hook #'yas-minor-mode)
-  (add-hook 'emacs-lisp-mode-hook #'yas-minor-mode)
-  (add-hook 'go-mode-hook #'yas-minor-mode))
+  (add-hook 'clojure-mode-hook #'yas-global-mode)
+  (add-hook 'cider-repl-mode-hook #'yas-global-mode)
+  (add-hook 'emacs-lisp-mode-hook #'yas-global-mode)
+  (add-hook 'go-mode-hook #'yas-global-mode))
 
 (provide 'init)
 ;;; init.el ends here
