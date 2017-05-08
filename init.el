@@ -148,6 +148,8 @@
 (add-hook
  'emacs-startup-hook
  (lambda()
+   (message "emacs-startup-hook")
+
    (loaded-time "all-packages" emacs-start-time)))
 
 ;; 全局性设置 start
@@ -163,6 +165,7 @@
  'after-init-hook
  (lambda ()
    (message "after-init-hook")
+
    (when (not (version< emacs-version "24.1"))
 
      ;; 设置字体
@@ -327,6 +330,7 @@
  'go-mode-hook
  (lambda ()
    (message "go-mode-hook")
+
    (setq gofmt-command "goimports")
    (add-hook 'before-save-hook 'gofmt-before-save)
 
@@ -362,6 +366,8 @@
 (add-hook
  'clojure-mode-hook
  (lambda ()
+   (message "clojure-mode-hook")
+
    (subword-mode)
    (eldoc-mode)
 
