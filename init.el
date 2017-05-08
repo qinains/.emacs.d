@@ -330,6 +330,15 @@
    (setq gofmt-command "goimports")
    (add-hook 'before-save-hook 'gofmt-before-save)
 
+   ;; 运行main方法
+   (defun go-run-main ()
+     (interactive)
+     (save-buffer)
+     (async-shell-command
+      (format "go run %s"
+              (shell-quote-argument (buffer-file-name)))))
+   (global-set-key (kbd "C-c C-r") 'go-run-main)
+
    (setq company-tooltip-limit 20)
    (setq company-idle-delay .25)
    (setq company-echo-delay 0)
