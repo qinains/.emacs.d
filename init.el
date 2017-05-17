@@ -287,7 +287,7 @@
       (turn-on-magit-gitflow)))
    (global-set-key [f12] 'magit-status)
 
-   (rainbow-delimiters-mode-enable)
+   (rainbow-delimiters-mode)
    (smartparens-strict-mode)
    (projectile-global-mode)
    (yas-global-mode)
@@ -343,6 +343,7 @@
               (shell-quote-argument (buffer-file-name)))))
    (global-set-key (kbd "C-c C-r") 'go-run-main)
 
+   (setq company-go-show-annotation t)
    (setq company-tooltip-limit 20)
    (setq company-idle-delay .25)
    (setq company-echo-delay 0)
@@ -351,16 +352,7 @@
 
    (go-eldoc-setup)
 
-   (go-guru-hl-identifier-mode)
-
-   (setq flycheck-disabled-checkers
-         '(go-gofmt
-           go-golint
-           go-vet
-           go-build
-           go-test
-           go-errcheck))
-   (add-hook 'flycheck-mode-hook #'flycheck-gometalinter-setup)))
+   (go-guru-hl-identifier-mode)))
 
 ;; clojure 语言配置
 (add-hook
