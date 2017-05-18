@@ -1,6 +1,6 @@
-#用emacs24开发clojure
+# emacs 开发配置
 
-##目录
+## 目录
 - [Windows下安装lein和emacs](#windows-install-lein-emacs)
     - [前期准备](#preparation)
         - [目录结构](#folder-structure)
@@ -16,14 +16,15 @@
 - [使用lein的注意事项](#lein-notice)
     - [jar包下载不了](#jar-cannot-download)
     - [如何在REPL模式下进行WEB开发](#repl-web)
+- [go开发](#go)
 - [常用按键](#key)
 - [其他问题](#other-problem)
 
-##<a name="windows-install-lein-emacs"/>Windows下安装lein和emacs
+## <a name="windows-install-lein-emacs"/>Windows下安装lein和emacs
 
-###<a name="preparation"/>前期准备
+### <a name="preparation"/>前期准备
 
-####<a name="folder-structure"/>目录结构
+#### <a name="folder-structure"/>目录结构
 假设本文件位于c:/path/to/this/dir/文件夹中，有目录结构
 
     README.md --本文件
@@ -161,6 +162,17 @@ Windows系统下，
 即可。
 
 **如果没有(start-http-server)函数，说明源码中有错误。可以在命令行中输入“lein run”或者“lein ring server”，手动启动服务，如果源码中有错误，即可看到错误信息。**
+
+## <a name="go-command"/>go开发之前需要安装的命令
+```
+go get -u -v github.com/nsf/gocode
+go get -u -v github.com/rogpeppe/godef
+go get -u -v golang.org/x/tools/cmd/guru
+go get -u -v golang.org/x/tools/cmd/gorename
+go get -u -v golang.org/x/tools/cmd/goimports
+go get -u -v github.com/alecthomas/gometalinter
+gometalinter --install --update
+```
 
 ##<a name="key"/>常用按键
 选定区域全部改为大写：C-x C-u

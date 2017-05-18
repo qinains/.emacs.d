@@ -172,7 +172,6 @@
      (set-frame-font "-outline-WenQuanYi Micro Hei Mono-normal-normal-normal-sans-13-*-*-*-p-*-iso8859-1")
 
      (tool-bar-mode -1)
-     (scroll-bar-mode -1)
      (electric-indent-mode)
      (global-linum-mode))
 
@@ -181,6 +180,11 @@
        (progn
          ;; 修复https的git push不了的问题(私钥不能有密码)
          (setenv "GIT_ASKPASS" "git-gui--askpass")))
+
+   ;; 文本模式
+   (if (memq window-system '(x))
+       (progn
+         (scroll-bar-mode -1)))
 
    ;; 光标显示为一竖线
    (setq-default cursor-type 'bar)
