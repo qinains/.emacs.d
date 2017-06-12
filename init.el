@@ -44,6 +44,7 @@
     clojure-mode-extra-font-locking
     clojure-snippets
     company
+    exec-path-from-shell
     flycheck-pos-tip
     flx-ido
     magit
@@ -169,7 +170,7 @@
    (when (not (version< emacs-version "24.1"))
 
      ;; 设置字体
-     (set-frame-font "-outline-WenQuanYi Micro Hei Mono-normal-normal-normal-sans-13-*-*-*-p-*-iso8859-1")
+     ;;(set-frame-font "-outline-WenQuanYi Micro Hei Mono-normal-normal-normal-sans-13-*-*-*-p-*-iso8859-1")
 
      (tool-bar-mode -1)
      (electric-indent-mode)
@@ -181,6 +182,8 @@
          ;; 修复https的git push不了的问题(私钥不能有密码)
          (setenv "GIT_ASKPASS" "git-gui--askpass")))
 
+   (when (memq window-system '(mac ns))
+     (exec-path-from-shell-initialize))
    ;; 文本模式
    (if (memq window-system '(x))
        (progn
